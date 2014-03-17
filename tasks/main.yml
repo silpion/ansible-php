@@ -1,0 +1,53 @@
+---
+- name: Assert platform is supported
+  tags: php
+  assert:
+    that:
+      - ansible_os_family in ['Debian']
+
+- include_vars: "{{ ansible_os_family }}.yml"
+  tags: php
+
+# Include os-specific tasks
+- include: "Debian.yml"
+  tags: php
+  when: ansible_os_family == 'Debian'
+
+- name: Install PHP 
+  tags: php
+  action: "{{ php_package_manager }} state=latest name={{ item }}"
+  with_items: php_package_list
+
+- name: Install additional packages 
+  tags: php
+  action: "{{ php_package_manager }} state=latest name={{ item }}"
+  with_items: php_package_list_additional
+
+#- name: Find all php.ini files
+#  tags: php
+#  shell: /usr/bin/find {{ php_conf }}  -name php.ini
+#  register: php_find_ini
+
+#- name: Install PHP Configuration
+#  tags: php
+#  ini_file: dest={{ item[0] }} section={{ item[1].section }} option={{ item[1].option }} value={{ item[1].value }} backup=yes
+#  with_nested: 
+#    - php_find_ini.stdout_lines
+#    - php_config
+
+- name: Install PHP Configuration
+  tags: php
+  ini_file: dest="{{ php_confd }}/{{ php_config_changes_ini }}" section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" 
+  with_items: php_config
+
+- name: Remove submodule configs if new config is given
+  tags: php
+  file: path="{{ php_confd }}/{{item.name}}.ini" state=absent
+  with_items: php_modules_conf
+
+- name: Install submodule configs
+  tags: php
+  ini_file: dest="{{ php_confd }}/{{item.0.name}}.ini" section="{{ item.1.section }}"  option="{{ item.1.option }}" value="{{ item.1.value }}"
+  with_subelements:
+    - php_modules_conf
+    - configs

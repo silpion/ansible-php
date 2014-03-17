@@ -1,0 +1,22 @@
+---
+php_package_list_additional: []
+# php_package_list_additional:
+#   - php5-gd
+
+php_config: []
+# php_config:
+#   - option: "date.timezone"
+#     section: "Date"
+#     value: "UTC"
+ 
+php_modules_conf: []
+# php_modules_conf:
+#   - name: pdo
+#     configs:
+#     - option: "extension"
+#       value: "pdo.so"
+#       section: "pdo"
+
+php_config_changes_ini: "test.ini"
+# use default
+php_version: "php53"
