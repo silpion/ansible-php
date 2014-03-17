@@ -1,7 +1,7 @@
 ---
 php_package_manager: apt
 php_package_list:
-  - php5
+  - php5-common
 
 php_conf: /etc/php5
 php_confd: /etc/php5/conf.d
