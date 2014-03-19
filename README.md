@@ -40,7 +40,7 @@ php_config:
 ```
 ### php_modules_conf: []
 
-set special configs for modules (conf.d) If you want to change something you need to set all 
+set special configurations for modules (conf.d) If you want to change something you need to set all 
 
 Example:
 ```

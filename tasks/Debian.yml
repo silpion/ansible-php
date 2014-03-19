@@ -10,17 +10,14 @@
 - name: Upgrade for php different Versions  
   tags: php
   apt_repository: repo="{{ php_ppa }}"
-  when: 
-    - php_version != 'none'
+  when: php_version != 'none'
 
 # install additional package for Version-Update
 - name: Install additional Package for PHP update
   tags: php
-  action: "{{ php_package_manager }} state=present name=python-software-properties "
-  when: 
-    - php_version != 'none'
+  action: "{{ php_package_manager }} state=installed name=python-software-properties "
+  when: php_version != 'none'
 
 - name: Update package cache
   tags: php
-  apt:
-    update_cache=yes
+  apt: update_cache=yes
