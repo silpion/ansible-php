@@ -17,8 +17,8 @@
   tags: php
   action: "{{ ansible_pkg_mgr }} state=latest name={{ item }}"
   with_items:
-    - php_package_list
-    - php_package_list_additional
+    - "{{ php_package_list }}"
+    - "{{ php_package_list_additional }}"
 
 - name: Install PHP Configuration
   tags: php
