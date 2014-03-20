@@ -1,6 +1,9 @@
 # ansible PHP
 
-Install and Configure PHP and Submodules
+This role can install and configure php and php-submodules on Ubuntu. 
+For special configuration it will create a seperate config-file in conf.d directory, 
+so your config-changes will be executed with all php-instances on your system (cli, apache, fpm ...)
+Also you can override special modules config like apc.ini. 
 
 ## Variables
 
@@ -40,7 +43,9 @@ php_config:
 ```
 ### php_modules_conf: []
 
-set special configurations for modules (conf.d) If you want to change something you need to set all 
+set special configuration for modules (conf.d) .
+If you want to change something you need to set all configuration of this file 
+it will be overwritten ("extension=pdo.so").
 
 Example:
 ```
