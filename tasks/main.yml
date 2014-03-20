@@ -15,25 +15,10 @@
 
 - name: Install PHP 
   tags: php
-  action: "{{ php_package_manager }} state=latest name={{ item }}"
-  with_items: php_package_list
-
-- name: Install additional packages 
-  tags: php
-  action: "{{ php_package_manager }} state=latest name={{ item }}"
-  with_items: php_package_list_additional
-
-#- name: Find all php.ini files
-#  tags: php
-#  shell: /usr/bin/find {{ php_conf }}  -name php.ini
-#  register: php_find_ini
-
-#- name: Install PHP Configuration
-#  tags: php
-#  ini_file: dest={{ item[0] }} section={{ item[1].section }} option={{ item[1].option }} value={{ item[1].value }} backup=yes
-#  with_nested: 
-#    - php_find_ini.stdout_lines
-#    - php_config
+  action: "{{ ansible_pkg_mgr }} state=latest name={{ item }}"
+  with_items:
+    - php_package_list
+    - php_package_list_additional
 
 - name: Install PHP Configuration
   tags: php

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Anja Siek
-  description: 
+  description: Manage PHP installation 
   company: http://silpion.de
   # Some suggested licenses:
   # - BSD (default)
