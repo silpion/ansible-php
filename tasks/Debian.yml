@@ -6,16 +6,16 @@
     - "../vars/{{ php_version }}.yml"
     - "../vars/version.yml"
 
-# add apt-repository for special php Version
-- name: Upgrade for php different Versions  
-  tags: php
-  apt_repository: repo="{{ php_ppa }}"
-  when: php_version != 'none'
-
 # install additional package for Version-Update
 - name: Install additional Package for PHP update
   tags: php
   action: "{{ ansible_pkg_mgr }} state=installed name=python-software-properties "
+  when: php_version != 'none'
+
+# add apt-repository for special php Version
+- name: Upgrade for php different Versions  
+  tags: php
+  apt_repository: repo="{{ php_ppa }}"
   when: php_version != 'none'
 
 - name: Update package cache
