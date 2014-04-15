@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Anja Siek
-  description: Manage PHP installation 
+  description: Manage PHP configuration on Ubuntu including extensions in various versions. 
   company: http://silpion.de
   # Some suggested licenses:
   # - BSD (default)
