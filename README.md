@@ -44,17 +44,19 @@ php_config:
 ### php_modules_conf: []
 
 set special configuration for modules (conf.d) .
-If you want to change something you need to set all configuration of this file 
-it will be overwritten ("extension=pdo.so").
+you can set special name like apc-my-project will create apc-my-project.ini 
+so you can simply add special module configurations. 
+If you want to override config you need to know how file is named on system. ("apc.ini" set name: "apc")
+
 
 Example:
 ```
 php_modules_conf:
-  - name: pdo
+  - name: apc-my-project
     configs:
-    - option: "extension"
-      value: "pdo.so"
-      section: "pdo"
+    - option: "apc.enabled"
+      value: "1"
+      section: "apc"
 ```
 
 ### php_version: none
