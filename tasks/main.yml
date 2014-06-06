@@ -22,7 +22,11 @@
 
 - name: Install PHP Configuration
   tags: php
-  ini_file: dest="{{ php_confd }}/{{ php_config_changes_ini }}" section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" 
+  ini_file: 
+    dest="{{ php_confd }}/{{ php_config_changes_ini }}" 
+    section="{{ item.section }}" 
+    option="{{ item.option }}" 
+    value="{{ item.value }}" 
   with_items: php_config
 
 - name: Remove submodule configs if new config is given
@@ -30,9 +34,13 @@
   file: path="{{ php_confd }}/{{item.name}}.ini" state=absent
   with_items: php_modules_conf
 
-- name: Install submodule configs
+- name: Install submodule config
   tags: php
-  ini_file: dest="{{ php_confd }}/{{item.0.name}}.ini" section="{{ item.1.section }}"  option="{{ item.1.option }}" value="{{ item.1.value }}"
+  ini_file: 
+    dest="{{ php_confd }}/{{item.0.name}}.ini" 
+    section="{{ item.1.section }}"  
+    option="{{ item.1.option }}" 
+    value="{{ item.1.value }}"
   with_subelements:
     - php_modules_conf
     - configs
