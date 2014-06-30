@@ -6,3 +6,4 @@ php_package_list:
 
 php_conf: /etc/php5
 php_confd: /etc/php5/conf.d
+php_mods_dir: /etc/php5/mods-available/
