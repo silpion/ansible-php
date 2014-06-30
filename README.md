@@ -12,6 +12,7 @@ Also you can override special modules config like apc.ini.
 list of additional packages to install
 
 Example:
+
 ```
 php_package_list_additional:
   - php5-gd
@@ -24,6 +25,7 @@ php_package_list_additional:
 set name of ini-file for PHP-config changes set in "php_config". 
 This will be located in conf.d . 
 Example:
+
 ```
  php_config_changes_ini: "test.ini"
 ```
@@ -35,6 +37,7 @@ will create (in Debian) /etc/php5/conf.d/test.ini
 set php config Variables:
 
 Example:
+
 ```
 php_config:
   - option: "date.timezone"
@@ -50,6 +53,7 @@ If you want to override config you need to know how file is named on system. ("a
 
 
 Example:
+
 ```
 php_modules_conf:
   - name: apc-my-project
@@ -67,6 +71,20 @@ set php - Version, Choices:
 * php55
 
 default is 'none', this will use the OS - default 
+
+### php_enmods: []
+add modules to enable (for php >= 5.4 ).
+This is needed if you use "php_config" or "php_modules_conf" variable in special inifiles. 
+Use this filename without ".ini" as modulename
+
+Example:
+
+```
+php_enmods: 
+ - test
+ - apc-my-project
+
+```
 
 
 ## Dependencies
