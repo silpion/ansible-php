@@ -72,7 +72,7 @@ set php - Version, Choices:
 
 default is 'none', this will use the OS - default 
 
-### php_enmods: []
+### php_mods_enabled: []
 add modules to enable (for php >= 5.4 ).
 This is needed if you use "php_config" or "php_modules_conf" variable in special inifiles. 
 Use this filename without ".ini" as modulename
@@ -80,7 +80,7 @@ Use this filename without ".ini" as modulename
 Example:
 
 ```
-php_enmods: 
+php_mods_enabled: 
  - test
  - apc-my-project
 

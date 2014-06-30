@@ -49,7 +49,7 @@
 
 - name: Use php5enmod if exists
   tags: php
-  with_items: php_enmods
+  with_items: php_mods_enabled
   when: mods_exists.stat.exists 
   command: php5enmod {{ item }}
 
