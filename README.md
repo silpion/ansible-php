@@ -1,9 +1,9 @@
 # ansible PHP
 
-This role can install and configure php and php-submodules on Ubuntu. 
-For special configuration it will create a seperate config-file in conf.d directory, 
+This role can install and configure php and php-submodules on Ubuntu.
+For special configuration it will create a seperate config-file in conf.d directory,
 so your config-changes will be executed with all php-instances on your system (cli, apache, fpm ...)
-Also you can override special modules config like apc.ini. 
+Also you can override special modules config like apc.ini.
 
 ## Variables
 
@@ -22,8 +22,8 @@ php_package_list_additional:
 ```
 ### php_config_changes_ini: "test.ini"
 
-set name of ini-file for PHP-config changes set in "php_config". 
-This will be located in conf.d . 
+set name of ini-file for PHP-config changes set in "php_config".
+This will be located in conf.d .
 Example:
 
 ```
@@ -47,8 +47,8 @@ php_config:
 ### php_modules_conf: []
 
 set special configuration for modules (conf.d) .
-you can set special name like apc-my-project will create apc-my-project.ini 
-so you can simply add special module configurations. 
+you can set special name like apc-my-project will create apc-my-project.ini
+so you can simply add special module configurations.
 If you want to override config you need to know how file is named on system. ("apc.ini" set name: "apc")
 
 
@@ -65,22 +65,22 @@ php_modules_conf:
 
 ### php_version: none
 
-set php - Version, Choices: 
+set php - Version, Choices:
 
-* php54 
+* php54
 * php55
 
-default is 'none', this will use the OS - default 
+default is 'none', this will use the OS - default
 
 ### php_mods_enabled: []
 add modules to enable (for php >= 5.4 ).
-This is needed if you use "php_config" or "php_modules_conf" variable in special inifiles. 
+This is needed if you use "php_config" or "php_modules_conf" variable in special inifiles.
 Use this filename without ".ini" as modulename
 
 Example:
 
 ```
-php_mods_enabled: 
+php_mods_enabled:
  - test
  - apc-my-project
 
@@ -95,3 +95,6 @@ Apache Version 2.0
 
 ## Author Information
 Anja Siek @anja.siek silpion.de
+
+
+<!-- vim: set nofen ts=4 sw=4: -->
