@@ -1,6 +1,6 @@
 # ansible PHP
 
-This role can install and configure php and php-submodules on Ubuntu. 
+This role can install and configure php and php-submodules on Ubuntu or Debian. 
 For special configuration it will create a seperate config-file in conf.d directory, 
 so your config-changes will be executed with all php-instances on your system (cli, apache, fpm ...)
 Also you can override special modules config like apc.ini. 
@@ -63,16 +63,9 @@ php_modules_conf:
       section: "apc"
 ```
 
-### php_version: none
-
-set php - Version, Choices: 
-
-* php54 
-* php55
-
-default is 'none', this will use the OS - default 
 
 ### php_mods_enabled: []
+
 add modules to enable (for php >= 5.4 ).
 This is needed if you use "php_config" or "php_modules_conf" variable in special inifiles. 
 Use this filename without ".ini" as modulename
@@ -86,6 +79,15 @@ php_mods_enabled:
 
 ```
 
+### php_ppa: 
+
+only for Ubuntu: you can set ppa to install different PHP-Versions from given ppa
+
+Example:
+
+```
+php_ppa: "ppa:ondrej/php5-5.6"
+```
 
 ## Dependencies
  None
