@@ -9,11 +9,11 @@
   tags: php
 
 # Include os-specific tasks
-- include: "Debian.yml"
+- include: "Ubuntu.yml"
   tags: php
-  when: ansible_os_family == 'Debian'
+  when: ansible_distribution == 'Ubuntu'
 
-- name: Install PHP 
+- name: Install PHP
   tags: php
   action: "{{ ansible_pkg_mgr }} state=latest name={{ item }}"
   with_items:
@@ -29,19 +29,19 @@
 
 - name: Install PHP Configuration
   tags: php
-  ini_file: 
-    dest="{% if mods_exists.stat.exists %}{{ php_mods_dir }}{% else %}{{ php_confd }}{% endif %}/{{ php_config_changes_ini }}" 
-    section="{{ item.section }}" 
-    option="{{ item.option }}" 
-    value="{{ item.value }}" 
+  ini_file:
+    dest="{% if mods_exists.stat.exists %}{{ php_mods_dir }}{% else %}{{ php_confd }}{% endif %}/{{ php_config_changes_ini }}"
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
   with_items: php_config
 
 - name: Install submodule config
   tags: php
-  ini_file: 
-    dest="{% if mods_exists.stat.exists %}{{ php_mods_dir }}{% else %}{{ php_confd }}{% endif %}/{{item.0.name}}.ini" 
-    section="{{ item.1.section }}"  
-    option="{{ item.1.option }}" 
+  ini_file:
+    dest="{% if mods_exists.stat.exists %}{{ php_mods_dir }}{% else %}{{ php_confd }}{% endif %}/{{item.0.name}}.ini"
+    section="{{ item.1.section }}"
+    option="{{ item.1.option }}"
     value="{{ item.1.value }}"
   with_subelements:
     - php_modules_conf
@@ -50,6 +50,6 @@
 - name: Use php5enmod if exists
   tags: php
   with_items: php_mods_enabled
-  when: mods_exists.stat.exists 
+  when: mods_exists.stat.exists
   command: php5enmod {{ item }}
 
