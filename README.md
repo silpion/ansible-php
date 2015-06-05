@@ -34,7 +34,7 @@ will create (in Debian) /etc/php5/conf.d/test.ini
 
 ### php_config: []
 
-set php config Variables:
+set php config Variables. Default section is 'PHP'.
 
 Example:
 
@@ -43,6 +43,8 @@ php_config:
   - option: "date.timezone"
     section: "Date"
     value: "UTC"
+  - option: "safe_mode"
+    value: "Off"
 ```
 ### php_modules_conf: []
 
@@ -62,18 +64,6 @@ php_modules_conf:
       value: "1"
       section: "apc"
 ```
-
-<<<<<<< HEAD
-### php_version: none
-
-set php - Version, Choices:
-
-* php54
-* php55
-
-default is 'none', this will use the OS - default
-=======
->>>>>>> feature/ubuntu-ppa
 
 ### php_mods_enabled: []
 
