@@ -1,3 +1,5 @@
 # Static variables/constants.
 #   Version of our role.
 php_role_version: 0.2.0
+
+php_default_ini_section: "PHP"

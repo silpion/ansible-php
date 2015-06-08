@@ -8,7 +8,7 @@ php_config: []
 #   - option: "date.timezone"
 #     section: "Date"
 #     value: "UTC"
- 
+
 php_modules_conf: []
 # php_modules_conf:
 #   - name: pdo
@@ -21,5 +21,5 @@ php_config_changes_ini: "test.ini"
 # use default
 php_version: "php53"
 
-# add modules for enmod  
+# add modules for enmod
 php_mods_enabled: []
