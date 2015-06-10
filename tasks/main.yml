@@ -23,14 +23,13 @@
 - name: Check command php5enmod exists
   tags: php
   register: register_mods_exists
-  changed_when: "register_mods_exists.rc == 0"
   failed_when: false
   shell: 'command -v php5enmod'
 
 - name: Decide Modules config-dir
   tags: php
   set_fact:
-    php_fact_mods_dir: "{{ php_mods_dir if register_mods_exists.changed else php_confd }}"
+    php_fact_mods_dir: "{{ php_mods_dir if register_mods_exists.stdout else php_confd }}"
 
 - name: Install PHP configuration
   tags: php
@@ -72,11 +71,11 @@
 - name: Use php5enmod to enable modules
   tags: php
   with_items: php_mods_enabled
-  when: register_mods_exists.changed
+  when: register_mods_exists.stdout
   command: php5enmod {{ item }}
 
 - name: Use php5dismod to disable modules
   tags: php
   with_items: php_mods_disabled
-  when: register_mods_exists.changed
+  when: register_mods_exists.stdout
   command: php5dismod {{ item }}
