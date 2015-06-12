@@ -18,8 +18,8 @@ php_modules_conf: []
 #       section: "pdo"
 
 php_config_changes_ini: "test.ini"
-# use default
-php_version: "php53"
 
 # add modules for enmod
 php_mods_enabled: []
+# remove modules
+php_mods_disabled: []
