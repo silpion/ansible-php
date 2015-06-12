@@ -47,8 +47,8 @@
   stat:
     path={{ php_fact_mods_dir }}/{{ item.name }}.ini
 
-# uses commandline tool crudini to mv any configuration from DEFAULT section into module section
-# this is necessary becousde ansible (python) not allows to use DEFAULT section in ini-files
+# Use commandline tool crudini to move any configuration from DEFAULT section into module section.
+# This is necessary to allow ansible ini_file: module to work with existing ini files.
 - name: Fix php module ini-files and remove DEFAULT section
   tags: php
   with_items: php_register_mods_ini.results
