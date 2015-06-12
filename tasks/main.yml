@@ -20,36 +20,64 @@
     - "{{ php_package_list_additional }}"
   action: "{{ ansible_pkg_mgr }} state=latest name={{ item }}"
 
-- name: check mods-available dir exists
+- name: Check command php5enmod exists
   tags: php
-  register: mods_exists
-  stat:
-    path="{{ php_mods_dir }}"
+  register: php_register_mods_exists
+  failed_when: false
+  shell: 'command -v php5enmod'
 
+- name: Decide Modules config-dir
+  tags: php
+  set_fact:
+    php_fact_mods_dir: "{{ php_mods_dir if php_register_mods_exists.stdout else php_confd }}"
 
-- name: Install PHP Configuration
+- name: Install PHP configuration
   tags: php
   with_items: php_config
   ini_file:
-    dest="{% if mods_exists.stat.exists %}{{ php_mods_dir }}{% else %}{{ php_confd }}{% endif %}/{{ php_config_changes_ini }}"
-    section="{{ item.section|default(php_default_ini_section) }}"
-    option="{{ item.option }}"
-    value="{{ item.value }}"
+    dest={{ php_fact_mods_dir }}/{{ php_config_changes_ini }}
+    section={{ item.section|default(php_default_ini_section) }}
+    option={{ item.option }}
+    value={{ item.value }}
 
-- name: Install submodule config
+- name: Register existing module ini-files
+  tags: php
+  with_items: php_modules_conf
+  register: php_register_mods_ini
+  stat:
+    path={{ php_fact_mods_dir }}/{{ item.name }}.ini
+
+# uses commandline tool crudini to mv any configuration from DEFAULT section into module section
+# this is necessary becousde ansible (python) not allows to use DEFAULT section in ini-files
+- name: Fix php module ini-files and remove DEFAULT section
+  tags: php
+  with_items: php_register_mods_ini.results
+  when: item.stat.exists
+  shell:
+    chdir={{ php_fact_mods_dir }}
+    crudini --set {{ item.item.name }}.ini {{ item.item.name }};
+    crudini --merge --existing  {{ item.item.name }}.ini  {{ item.item.name }} < {{ item.item.name }}.ini;
+    crudini --del {{ item.item.name }}.ini DEFAULT
+
+- name: Install submodule configuration
   tags: php
   with_subelements:
     - php_modules_conf
     - configs
   ini_file:
-    dest="{% if mods_exists.stat.exists %}{{ php_mods_dir }}{% else %}{{ php_confd }}{% endif %}/{{item.0.name}}.ini"
-    section="{{ item.1.section }}"
-    option="{{ item.1.option }}"
-    value="{{ item.1.value }}"
+    dest={{ php_fact_mods_dir }}/{{ item.0.name }}.ini
+    section={{ item.1.section }}
+    option={{ item.1.option }}
+    value={{ item.1.value }}
 
-- name: Use php5enmod if exists
+- name: Use php5enmod to enable modules
   tags: php
   with_items: php_mods_enabled
-  when: mods_exists.stat.exists
+  when: php_register_mods_exists.stdout
   command: php5enmod {{ item }}
 
+- name: Use php5dismod to disable modules
+  tags: php
+  with_items: php_mods_disabled
+  when: php_register_mods_exists.stdout
+  command: php5dismod {{ item }}
