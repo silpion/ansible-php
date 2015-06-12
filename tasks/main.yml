@@ -22,14 +22,14 @@
 
 - name: Check command php5enmod exists
   tags: php
-  register: register_mods_exists
+  register: php_register_mods_exists
   failed_when: false
   shell: 'command -v php5enmod'
 
 - name: Decide Modules config-dir
   tags: php
   set_fact:
-    php_fact_mods_dir: "{{ php_mods_dir if register_mods_exists.stdout else php_confd }}"
+    php_fact_mods_dir: "{{ php_mods_dir if php_register_mods_exists.stdout else php_confd }}"
 
 - name: Install PHP configuration
   tags: php
@@ -40,13 +40,15 @@
     option={{ item.option }}
     value={{ item.value }}
 
-- name: Register existing  module ini-files
+- name: Register existing module ini-files
   tags: php
   with_items: php_modules_conf
   register: php_register_mods_ini
   stat:
     path={{ php_fact_mods_dir }}/{{ item.name }}.ini
 
+# uses commandline tool crudini to mv any configuration from DEFAULT section into module section
+# this is necessary becousde ansible (python) not allows to use DEFAULT section in ini-files
 - name: Fix php module ini-files and remove DEFAULT section
   tags: php
   with_items: php_register_mods_ini.results
@@ -71,11 +73,11 @@
 - name: Use php5enmod to enable modules
   tags: php
   with_items: php_mods_enabled
-  when: register_mods_exists.stdout
+  when: php_register_mods_exists.stdout
   command: php5enmod {{ item }}
 
 - name: Use php5dismod to disable modules
   tags: php
   with_items: php_mods_disabled
-  when: register_mods_exists.stdout
+  when: php_register_mods_exists.stdout
   command: php5dismod {{ item }}
