@@ -20,7 +20,7 @@
     - "{{ php_package_list_additional }}"
   action: "{{ ansible_pkg_mgr }} state=latest name={{ item }}"
 
-- name: Install cudini with pip
+- name: Install crudini with pip
   tags: php
   pip:
     name=crudini

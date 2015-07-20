@@ -12,4 +12,3 @@
 - name: Update package cache
   tags: php
   apt: update_cache=yes
-
