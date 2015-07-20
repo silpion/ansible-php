@@ -8,3 +8,8 @@
 - name: Set ppa for different PHP Version
   tags: php
   apt_repository: repo="{{ php_ppa }}"
+
+- name: Update package cache
+  tags: php
+  apt: update_cache=yes
+
