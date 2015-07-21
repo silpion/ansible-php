@@ -1,3 +1,13 @@
+# 1.0.0
+
+Anja Siek (5):
+
+* add refresh after ppa add
+* add crudini install via pip
+* fix wording
+* only do update if ppa changed
+* add cli package
+
 # 0.4.0
 
 Anja Siek (3):
