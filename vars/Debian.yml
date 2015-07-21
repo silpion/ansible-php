@@ -3,7 +3,8 @@ php_package_manager: apt
 php_package_list:
   - php5-common
   - php5-cgi
-  - crudini
+  - php5-cli
+  - python-pip
 
 php_conf: /etc/php5
 php_confd: /etc/php5/conf.d
