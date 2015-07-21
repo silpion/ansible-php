@@ -7,8 +7,10 @@
 # add apt-repository for special php Version
 - name: Set ppa for different PHP Version
   tags: php
+  register: php_register_ppa
   apt_repository: repo="{{ php_ppa }}"
 
 - name: Update package cache
   tags: php
+  when: php_register_ppa.changed
   apt: update_cache=yes
