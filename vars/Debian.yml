@@ -1,5 +1,4 @@
 ---
-php_package_manager: apt
 php_package_list:
   - php5-common
   - php5-cgi

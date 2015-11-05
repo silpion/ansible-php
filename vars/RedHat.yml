@@ -1,0 +1,10 @@
+---
+php_package_list:
+  - php-common
+  - php-cgi
+  - php-cli
+  - python-pip
+
+php_conf: /etc
+php_confd: /etc/php.d
+php_mods_dir: /etc/php/mods-available
