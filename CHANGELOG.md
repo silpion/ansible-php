@@ -1,3 +1,10 @@
+# 1.1.0
+
+Anja Siek (2):
+
+* remove useless variable
+* add RedHat support
+
 # 1.0.0
 
 Anja Siek (5):
