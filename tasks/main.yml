@@ -57,7 +57,7 @@
 - name: Fix php module ini-files and remove DEFAULT section
   tags: php
   with_items: php_register_mods_ini.results
-  when: item.stat.exists
+  when: php_register_mods_ini.results is defined and item.stat.exists
   shell:
     chdir={{ php_fact_mods_dir }}
     crudini --set {{ item.item.name }}.ini {{ item.item.name }};
