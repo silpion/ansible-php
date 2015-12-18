@@ -1,3 +1,9 @@
+# 1.1.1
+
+Conor Schaefer (1):
+
+* Check for definedness of php\_register\_mods\_ini var
+
 # 1.1.0
 
 Anja Siek (2):
