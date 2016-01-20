@@ -13,8 +13,17 @@
   tags: php
   when: ansible_distribution == 'Ubuntu' and php_ppa is defined
 
+- name: Update apt package cache
+  tags: php
+  become: true
+  when: ansible_os_family == 'Debian'
+  apt:
+    update_cache: true
+    cache_valid_time: "{{ util_apt_cache_valid_time|default(3600) }}"
+
 - name: Install PHP
   tags: php
+  become: true
   with_items:
     - "{{ php_package_list }}"
     - "{{ php_package_list_additional }}"
@@ -22,6 +31,7 @@
 
 - name: Install crudini with pip
   tags: php
+  become: true
   pip:
     name=crudini
 
@@ -38,6 +48,7 @@
 
 - name: Install PHP configuration
   tags: php
+  become: true
   with_items: php_config
   ini_file:
     dest={{ php_fact_mods_dir }}/{{ php_config_changes_ini }}
@@ -56,6 +67,7 @@
 # This is necessary to allow ansible ini_file: module to work with existing ini files.
 - name: Fix php module ini-files and remove DEFAULT section
   tags: php
+  become: true
   with_items: php_register_mods_ini.results
   when: php_register_mods_ini.results is defined and item.stat.exists
   shell:
@@ -66,6 +78,7 @@
 
 - name: Install submodule configuration
   tags: php
+  become: true
   with_subelements:
     - php_modules_conf
     - configs
@@ -77,12 +90,14 @@
 
 - name: Use php5enmod to enable modules
   tags: php
+  become: true
   with_items: php_mods_enabled
   when: php_register_mods_exists.stdout
   command: php5enmod {{ item }}
 
 - name: Use php5dismod to disable modules
   tags: php
+  become: true
   with_items: php_mods_disabled
   when: php_register_mods_exists.stdout
   command: php5dismod {{ item }}
