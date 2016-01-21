@@ -1,0 +1,21 @@
+---
+# Download assets to the local workstations persistent download directory
+- name: lib.get_url
+  tags: lib
+  become: "{{ lib_local_action_become_enable|default(omit) }}"
+  become_user: "{{ lib_local_action_become_user|default(omit) }}"
+  become_method: "{{ lib_local_action_become_method|default(omit) }}"
+  local_action: get_url
+  args:
+    url: "{{ url|mandatory }}"
+    dest: "{{ dest|mandatory }}"
+    url_username: "{{ url_username|default(omit) }}"
+    url_password: "{{ url_password|default(omit) }}"
+    sha256sum: "{{ sha256sum|default(omit) }}"
+    force: "{{ force|default(false)|bool }}"
+    timeout: "{{ timeout|default(lib_module_get_url_timeout) }}"
+    use_proxy: "{{ use_proxy|default(true)|bool }}"
+    validate_certs: "{{ validate_certs|default(true)|bool }}"
+    mode: "{{ mode|default(0644) }}"
+    owner: "{{ util_persistent_data_path_local_owner|default(omit) }}"
+    group: "{{ util_persistent_data_path_local_group|default(omit) }}"

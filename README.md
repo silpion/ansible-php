@@ -1,44 +1,47 @@
 # ansible-lib
 
+Provide common tasks as includable task files, e.g. libs.
+
 ## Synopsis
 
-Synopsis...
+The silpion.lib role provides functionality commonly used in other
+roles.
 
 ## Description
 
-Description...
+The silpion.lib role is a non-callable role which is designed to
+have single files from tasks/ included in other roles.
+
+### Configuration
+
+It uses all variables from ``silpion.util`` role as defaults while
+providing its own variables to override
+
+### Library
+
+The following features/paradigms are available to be used.
+
+#### Data persistency
+
+Download assets once to the local workstation and distribute as often
+as required in context of local network.
+
+```yaml
+- name: Include data persistency tasks
+  include: silpion.lib/tasks/datapersistency.yml
+```
+
+By default this installs one directory on the workstation and one on
+the managed node. The following defaults apply the directories created:
+
 
 ## Requirements
 
-Requirements...
+* None
 
 ## Role Variables
 
 * ``variable_name``: Variable description (<!variable type>, default: ``variable default value``)
-
-### complex_variable_name
-
-Complex variable documentation...
-
-### another_complex_variable_name
-
-Complex variable documentation...
-
-## Dependencies
-
-Dependencies...
-
-### Dependency variables
-
-Dependency variables documentation...
-
-## Example Playbook
-
-```yaml
-- hosts: all
-  roles:
-     - { role: ansible-lib }
-```
 
 ## Contributing
 
