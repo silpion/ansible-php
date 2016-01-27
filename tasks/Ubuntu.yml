@@ -2,15 +2,16 @@
 # install additional package for Version-Update
 - name: Install additional Package for different PHP Version
   tags: php
-  action: "{{ ansible_pkg_mgr }} state=installed name=python-software-properties "
+  become: true
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    state: "{{ util_package_state|default('installed') }}"
+    name: python-software-properties
 
 # add apt-repository for special php Version
 - name: Set ppa for different PHP Version
   tags: php
-  register: php_register_ppa
-  apt_repository: repo="{{ php_ppa }}"
-
-- name: Update package cache
-  tags: php
-  when: php_register_ppa.changed
-  apt: update_cache=yes
+  become: true
+  apt_repository:
+    repo: "{{ php_ppa }}"
+    update_cache: true
