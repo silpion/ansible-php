@@ -1,0 +1,38 @@
+---
+- hosts: all
+  vars:
+    php_ppa: "ppa:ondrej/php5-5.6"
+    php_package_list_additional:
+      - php-apc
+    php_mods_enabled:
+      - "apcu"
+    php_config:
+      - option: "safe_mode"
+        section: "PHP"
+        value: "Off"
+      - option: "memory_limit"
+        section: "PHP"
+        value: "512M"
+      - option: "date.timezone"
+        section: "Date"
+        value: "UTC"
+      - option: "realpath_cache_size"
+        section: "PHP"
+        value: "32k"
+    php_modules_conf:
+      - name: "apcu"
+        configs:
+        - option: "apc.enabled"
+          value: "1"
+          section: "apcu"
+        - option: "apc.optimization"
+          value: "0"
+          section: "apcu"
+        - option: "apc.shm_segments"
+          value: "1"
+          section: "apcu"
+        - option: "apc.shm_size"
+          value: "778M"
+          section: "apcu"
+  roles:
+    - { role: ansible-php }

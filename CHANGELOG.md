@@ -1,3 +1,18 @@
+# 2.0.0
+
+Anja Siek (2):
+
+* add code from ansible-role generator; update tasks ans requironments so that role can run independent
+* beautifying
+
+Mark Kusch (4):
+
+* Apply more style-guide rules
+* Fix unnecessary changed event in register for php5enmod command
+* Fixup acpu module name in test playbook
+* Fix unnecessary changed events in Debian php5{en,dis}mod commands
+
+
 # 1.1.1
 
 Conor Schaefer (1):

@@ -5,30 +5,39 @@
     that:
       - ansible_os_family in ['Debian','RedHat']
 
-- include_vars: "{{ ansible_os_family }}.yml"
+- name: Include OS specific vars
   tags: php
+  include_vars: "{{ ansible_os_family }}.yml"
 
 # Include os-specific tasks
-- include: "Ubuntu.yml"
+- name: Include Ubuntu specific tasks
   tags: php
   when: ansible_distribution == 'Ubuntu' and php_ppa is defined
+  include: "Ubuntu.yml"
 
 - name: Install PHP
   tags: php
+  become: true
   with_items:
     - "{{ php_package_list }}"
     - "{{ php_package_list_additional }}"
-  action: "{{ ansible_pkg_mgr }} state=latest name={{ item }}"
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    state: "{{ util_package_state|default('installed') }}"
+    name: "{{ item }}"
 
 - name: Install crudini with pip
   tags: php
+  become: true
   pip:
-    name=crudini
+    name: crudini
 
 - name: Check command php5enmod exists
   tags: php
   register: php_register_mods_exists
+  always_run: true
   failed_when: false
+  changed_when: false
   shell: 'command -v php5enmod'
 
 - name: Decide Modules config-dir
@@ -38,51 +47,59 @@
 
 - name: Install PHP configuration
   tags: php
+  become: true
   with_items: php_config
   ini_file:
-    dest={{ php_fact_mods_dir }}/{{ php_config_changes_ini }}
-    section={{ item.section|default(php_default_ini_section) }}
-    option={{ item.option }}
-    value={{ item.value }}
+    dest: "{{ php_fact_mods_dir }}/{{ php_config_changes_ini }}"
+    section: "{{ item.section|default(php_default_ini_section) }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
 
 - name: Register existing module ini-files
   tags: php
   with_items: php_modules_conf
   register: php_register_mods_ini
   stat:
-    path={{ php_fact_mods_dir }}/{{ item.name }}.ini
+    path: "{{ php_fact_mods_dir }}/{{ item.name }}.ini"
 
 # Use commandline tool crudini to move any configuration from DEFAULT section into module section.
 # This is necessary to allow ansible ini_file: module to work with existing ini files.
 - name: Fix php module ini-files and remove DEFAULT section
   tags: php
+  become: true
   with_items: php_register_mods_ini.results
   when: php_register_mods_ini.results is defined and item.stat.exists
   shell:
-    chdir={{ php_fact_mods_dir }}
     crudini --set {{ item.item.name }}.ini {{ item.item.name }};
     crudini --merge --existing  {{ item.item.name }}.ini  {{ item.item.name }} < {{ item.item.name }}.ini;
     crudini --del {{ item.item.name }}.ini DEFAULT
+  args:
+    chdir: "{{ php_fact_mods_dir }}"
 
 - name: Install submodule configuration
   tags: php
+  become: true
   with_subelements:
     - php_modules_conf
     - configs
   ini_file:
-    dest={{ php_fact_mods_dir }}/{{ item.0.name }}.ini
-    section={{ item.1.section }}
-    option={{ item.1.option }}
-    value={{ item.1.value }}
+    dest: "{{ php_fact_mods_dir }}/{{ item.0.name }}.ini"
+    section: "{{ item.1.section }}"
+    option: "{{ item.1.option }}"
+    value: "{{ item.1.value }}"
 
 - name: Use php5enmod to enable modules
   tags: php
+  become: true
+  changed_when: false
   with_items: php_mods_enabled
   when: php_register_mods_exists.stdout
   command: php5enmod {{ item }}
 
 - name: Use php5dismod to disable modules
   tags: php
+  become: true
+  changed_when: false
   with_items: php_mods_disabled
   when: php_register_mods_exists.stdout
   command: php5dismod {{ item }}
