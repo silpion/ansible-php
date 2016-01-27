@@ -5,7 +5,7 @@
     php_package_list_additional:
       - php-apc
     php_mods_enabled:
-      - "apc"
+      - "apcu"
     php_config:
       - option: "safe_mode"
         section: "PHP"
