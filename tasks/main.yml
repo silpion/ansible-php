@@ -91,6 +91,7 @@
 - name: Use php5enmod to enable modules
   tags: php
   become: true
+  changed_when: false
   with_items: php_mods_enabled
   when: php_register_mods_exists.stdout
   command: php5enmod {{ item }}
@@ -98,6 +99,7 @@
 - name: Use php5dismod to disable modules
   tags: php
   become: true
+  changed_when: false
   with_items: php_mods_disabled
   when: php_register_mods_exists.stdout
   command: php5dismod {{ item }}
