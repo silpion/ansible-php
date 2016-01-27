@@ -8,7 +8,7 @@
   local_action: get_url
   args:
     url: "{{ url|mandatory }}"
-    dest: "{{ dest|mandatory }}"
+    dest: "{{ lib_persistent_data_path_local }}/{{ filename|mandatory }}"
     url_username: "{{ url_username|default(omit) }}"
     url_password: "{{ url_password|default(omit) }}"
     sha256sum: "{{ sha256sum|default(omit) }}"
