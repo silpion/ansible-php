@@ -3,7 +3,10 @@
 - name: Install additional Package for different PHP Version
   tags: php
   become: true
-  action: "{{ ansible_pkg_mgr }} state=installed name=python-software-properties "
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    state: "{{ util_package_state|default('installed') }}"
+    name: python-software-properties
 
 # add apt-repository for special php Version
 - name: Set ppa for different PHP Version

@@ -5,13 +5,15 @@
     that:
       - ansible_os_family in ['Debian','RedHat']
 
-- include_vars: "{{ ansible_os_family }}.yml"
+- name: Include OS specific vars
   tags: php
+  include_vars: "{{ ansible_os_family }}.yml"
 
 # Include os-specific tasks
-- include: "Ubuntu.yml"
+- name: Include Ubuntu specific tasks
   tags: php
   when: ansible_distribution == 'Ubuntu' and php_ppa is defined
+  include: "Ubuntu.yml"
 
 - name: Install PHP
   tags: php
@@ -19,7 +21,10 @@
   with_items:
     - "{{ php_package_list }}"
     - "{{ php_package_list_additional }}"
-  action: "{{ ansible_pkg_mgr }} state=latest name={{ item }}"
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    state: "{{ util_package_state|default('installed') }}"
+    name: "{{ item }}"
 
 - name: Install crudini with pip
   tags: php
@@ -63,10 +68,11 @@
   with_items: php_register_mods_ini.results
   when: php_register_mods_ini.results is defined and item.stat.exists
   shell:
-    chdir={{ php_fact_mods_dir }}
     crudini --set {{ item.item.name }}.ini {{ item.item.name }};
     crudini --merge --existing  {{ item.item.name }}.ini  {{ item.item.name }} < {{ item.item.name }}.ini;
     crudini --del {{ item.item.name }}.ini DEFAULT
+  args:
+    chdir: "{{ php_fact_mods_dir }}"
 
 - name: Install submodule configuration
   tags: php
