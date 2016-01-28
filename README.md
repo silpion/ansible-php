@@ -66,7 +66,7 @@ default values for its own variables. If there is no variable from
 silpion.util role configured, silpion.lib role uses the same sane
 defaults.
 
-See [Role Variables][] documentation below.
+See [Role Variables](#role_variables) documentation below.
 
 ### Library
 
@@ -86,7 +86,7 @@ as required in context of local network.
 By default this installs one directory on the workstation and one on
 the managed node.
 
-See [Role Variables][] documentation below.
+See [Role Variables](#role_variables) documentation below.
 
 ##### Download assets (get_url.yml)
 
@@ -145,6 +145,8 @@ lib role provides tasks for check mode detection. Including
 * None
 
 ## Role Variables
+
+<a name="role_variables"></a>
 
 All variables use the corresponding variable from ``silpion.util`` role as
 defaults. If there are no variables from silpion.util are configured, the
