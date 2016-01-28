@@ -5,7 +5,6 @@
 # This includable list of tasks ensures local and remote directories
 # are present.
 - name: Install local persistent data path
-  tags: lib
   become: "{{ lib_local_action_become_enable }}"
   become_user: "{{ lib_local_action_become_user }}"
   become_method: "{{ lib_local_action_become_method }}"
@@ -22,7 +21,6 @@
     seuser: "{{ util_persistent_data_path_local_seuser|default(omit) }}"
 
 - name: Install remote persistent data path
-  tags: lib
   become: "{{ lib_action_become_enable }}"
   become_user: "{{ lib_action_become_user }}"
   become_method: "{{ lib_action_become_method }}"
