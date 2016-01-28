@@ -144,9 +144,7 @@ lib role provides tasks for check mode detection. Including
 
 * None
 
-## Role Variables
-
-<a name="role_variables"></a>
+## <a name="role_variables"></a>Role Variables
 
 All variables use the corresponding variable from ``silpion.util`` role as
 defaults. If there are no variables from silpion.util are configured, the
