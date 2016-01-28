@@ -66,7 +66,7 @@ default values for its own variables. If there is no variable from
 silpion.util role configured, silpion.lib role uses the same sane
 defaults.
 
-See role variables documentation below.
+See [Role Variables][] documentation below.
 
 ### Library
 
@@ -86,7 +86,7 @@ as required in context of local network.
 By default this installs one directory on the workstation and one on
 the managed node.
 
-See role variables documentation below.
+See [Role Variables][] documentation below.
 
 ##### Download assets (get_url.yml)
 
