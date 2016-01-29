@@ -18,7 +18,7 @@
   register: lib_registered_install_role_local_facts
   template:
     src: "{{ role_path }}/templates/{{ template|default('facts.j2') }}"
-    dest: "{{ util_local_facts_directory|default('/etc/ansible/facts.d') }}/{{ role_name }}.yml"
+    dest: "{{ util_local_facts_directory|default('/etc/ansible/facts.d') }}/{{ role_name }}.fact"
     mode: "{{ file_mode|default(0644) }}"
     owner: "{{ util_persistent_data_path_remote_owner|default(omit) }}"
     group: "{{ util_persistent_data_path_remote_group|default(omit) }}"
