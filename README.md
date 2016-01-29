@@ -200,10 +200,9 @@ lib role provides tasks for check mode detection. Including
 ### Local facts installation
 
 ``tasks/localfacts.yml`` will ensure availability of a directory to
-store local facts into based on templates, deploy roles local facts
-based on a template to be provided into this tasks file and re-read
-local facts based on changed events when the template has been
-deployed.
+store local facts into, deploy roles local facts based on a template
+to be provided into this tasks file and re-read local facts based on
+changed events when the template has been deployed.
 
 ```yaml
 - name: Include local facts installation
