@@ -59,6 +59,14 @@ run any task itself.
     version: "{{ role_name_version }}"
 ```
 
+```yaml
+- name: Include local facts installation
+  tags: "{{ role_name }}"
+  include: "{{ role_path }}/../silpion.lib/tasks/localfacts.yml
+  vars:
+    template: myrolesfactstemplate.j2
+```
+
 # Configuration
 
 ``silpion.lib`` role uses variables from ``silpion.util`` role as
@@ -179,13 +187,37 @@ lib role provides tasks for check mode detection. Including
 
 ```yaml
 - name: Include check mode detection
-  include: silpion.lib/tasks/checkmodedetection.yml
+  tags: "{{ role_name }}"
+  include: "{{ role_name }}/../silpion.lib/tasks/checkmodedetection.yml
 
 - name: Run a task when Ansible is NOT in --check mode
+  tags: "{{ role_name }}"
   when: not lib_fact_check_mode
   module:
     arg: value
 ```
+
+### Local facts installation
+
+``tasks/localfacts.yml`` will ensure availability of a directory to
+store local facts into based on templates, deploy roles local facts
+based on a template to be provided into this tasks file and re-read
+local facts based on changed events when the template has been
+deployed.
+
+```yaml
+- name: Include local facts installation
+  tags: "{{ role_name }}"
+  include: "{{ role_name }}/../silpion.lib/tasks/localfacts.yml"
+  vars:
+    template: "{{ role_name_fact_template }}.j2"
+```
+
+#### Vars
+
+##### Optional
+
+* ``template``: Template to deploy (default: ``facts.j2``)
 
 # Requirements
 
@@ -217,6 +249,13 @@ defaults. If there are no variables from silpion.util are configured, the
 ## modules configuration
 
 * ``lib_module_get_url_timeout``: Default timeout for the ``get_url`` module when using tasks/get\_url.yml (int, default: ``{{ util_module_get_url_timeout|default(10) }}``)
+
+## local facts
+
+Ansible ``setup`` module supports ``fact_path`` variable. This can be
+configured with a variable from util role.
+
+* ``util_local_facts_directory``: Where to store local facts to (string, default: ``/etc/ansible/facts.d``)
 
 # Contributing
 
