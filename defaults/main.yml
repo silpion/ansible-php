@@ -1,2 +1,13 @@
 ---
-# defaults file for ansible-lib
+lib_local_action_become_enable: "{{ util_local_action_become_enable|default(false) }}"
+lib_local_action_become_user: "{{ util_local_action_become_user|default('root') }}"
+lib_local_action_become_method: "{{ util_local_action_become_method|default('sudo') }}"
+
+lib_action_become_enable: "{{ util_action_become_enable|default(true) }}"
+lib_action_become_user: "{{ util_action_become_user|default('root') }}"
+lib_action_become_method: "{{ util_action_become_method|default('sudo') }}"
+
+lib_persistent_data_path_local: "{{ util_persistent_data_path_local|default(lookup('env', 'HOME') + '/.ansible/assets') }}"
+lib_persistent_data_path_remote: "{{ util_persistent_data_path_remote|default('/usr/local/src/ansible/data') }}"
+
+lib_module_get_url_timeout: "{{ util_module_get_url_timeout|default(10) }}"

@@ -1,0 +1,16 @@
+---
+# Upload assets to the managed nodes persistent upload directory
+- name: lib.copy <{{ filename }}>
+  become: "{{ lib_action_become_enable|default(omit) }}"
+  become_user: "{{ lib_action_become_user|default(omit) }}"
+  become_method: "{{ lib_action_become_method|default(omit) }}"
+  copy:
+    src: "{{ lib_persistent_data_path_local }}/{{ filename|mandatory }}"
+    dest: "{{ lib_persistent_data_path_remote }}/{{ filename|mandatory }}"
+    backup: "{{ backup|default(false)|bool }}"
+    follow: "{{ follow|default(false)|bool }}"
+    force: "{{ force|default(true)|bool }}"
+    validate: "{{ validate|default(omit) }}"
+    mode: "{{ mode|default(0644) }}"
+    owner: "{{ util_persistent_data_path_remote_owner|default(omit) }}"
+    group: "{{ util_persistent_data_path_remote_group|default(omit) }}"

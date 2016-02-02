@@ -1,0 +1,14 @@
+---
+# Some modules do not support check-mode. These might add required
+# resources for other tasks/modules which cannot run without
+# check-mode detection.
+- name: Detect --check mode
+  when: lib_fact_check_mode is undefined
+  changed_when: false
+  register: lib_registered_detect_check_mode
+  command: "true"
+
+- name: Configure --check mode fact
+  when: lib_fact_check_mode is undefined
+  set_fact:
+    lib_fact_check_mode: "{{ true if lib_registered_detect_check_mode.skipped is defined else false }}"
