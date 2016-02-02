@@ -65,6 +65,7 @@ run any task itself.
   include: "{{ role_path }}/../silpion.lib/tasks/localfacts.yml
   vars:
     template: myrolesfactstemplate.j2
+    namespace: myroleshortname
 ```
 
 # Configuration
@@ -210,9 +211,14 @@ changed events when the template has been deployed.
   include: "{{ role_name }}/../silpion.lib/tasks/localfacts.yml"
   vars:
     template: "{{ role_name_fact_template }}.j2"
+    namespace: myroleshortname
 ```
 
 #### Vars
+
+##### Mandatory
+
+* ``namespace``: Namespace in ``ansible_local`` to be created (default: ``undefined|mandatory``)
 
 ##### Optional
 
