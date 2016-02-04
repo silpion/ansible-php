@@ -1,0 +1,7 @@
+---
+# Roles commonly include variables for middleware version specific configuration.
+- name: Include version specific vars
+  with_first_found:
+    - "{{ role_path }}/vars/versions/{{ version }}.yml"
+    - "{{ role_path }}/../silpion.lib/vars/versions/noop.yml"
+  include_vars: "{{ item }}"
