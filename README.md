@@ -102,7 +102,17 @@ php_ppa: "ppa:ondrej/php5-5.6"
 ```
 
 ## Dependencies
- None
+
+This role depends on [silpion.util](https://github.com/silpion/ansible-util)
+role. This is configured for ``ansible-galaxy install`` in **requirements.yml**.
+
+**NOTE**: Requirements are installed as virtual user ``silpion``
+(``silpion.util``).
+
+Be sure to install required roles with
+
+    ansible-galaxy install --role-file requirements.yml
+
 
 ## License
 Apache Version 2.0
