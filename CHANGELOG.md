@@ -1,3 +1,9 @@
+# 2.0.1
+
+Anja Siek (1):
+
+* fix requironments and README
+
 # 2.0.0
 
 Anja Siek (2):
