@@ -1,3 +1,8 @@
+# 2.0.2
+Anja Siek (1):
+
+* Fixup dependency management
+
 # 2.0.1
 
 Anja Siek (1):
