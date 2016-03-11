@@ -48,7 +48,7 @@
 - name: Install PHP configuration
   tags: php
   become: true
-  with_items: php_config
+  with_items: "{{ php_config }}"
   ini_file:
     dest: "{{ php_fact_mods_dir }}/{{ php_config_changes_ini }}"
     section: "{{ item.section|default(php_default_ini_section) }}"
@@ -57,7 +57,7 @@
 
 - name: Register existing module ini-files
   tags: php
-  with_items: php_modules_conf
+  with_items: "{{ php_modules_conf }}"
   register: php_register_mods_ini
   stat:
     path: "{{ php_fact_mods_dir }}/{{ item.name }}.ini"
@@ -67,8 +67,8 @@
 - name: Fix php module ini-files and remove DEFAULT section
   tags: php
   become: true
-  with_items: php_register_mods_ini.results
-  when: php_register_mods_ini.results is defined and item.stat.exists
+  with_items: "{{ php_register_mods_ini.results }}"
+  when: "{{ php_register_mods_ini.results is defined and item.stat.exists }}"
   shell:
     crudini --set {{ item.item.name }}.ini {{ item.item.name }};
     crudini --merge --existing  {{ item.item.name }}.ini  {{ item.item.name }} < {{ item.item.name }}.ini;
@@ -80,7 +80,7 @@
   tags: php
   become: true
   with_subelements:
-    - php_modules_conf
+    - "{{ php_modules_conf }}"
     - configs
   ini_file:
     dest: "{{ php_fact_mods_dir }}/{{ item.0.name }}.ini"
@@ -92,14 +92,14 @@
   tags: php
   become: true
   changed_when: false
-  with_items: php_mods_enabled
-  when: php_register_mods_exists.stdout
+  with_items: "{{ php_mods_enabled }}"
+  when: "{{ php_register_mods_exists.stdout != '' }}"
   command: php5enmod {{ item }}
 
 - name: Use php5dismod to disable modules
   tags: php
   become: true
   changed_when: false
-  with_items: php_mods_disabled
-  when: php_register_mods_exists.stdout
+  with_items: "{{ php_mods_disabled }}"
+  when: "{{ php_register_mods_exists.stdout != '' }}"
   command: php5dismod {{ item }}
