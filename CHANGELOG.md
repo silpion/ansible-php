@@ -1,3 +1,9 @@
+# 2.0.1
+
+Anja Siek (1):
+
+* fix random vars loading
+
 # 2.0.0
 
 # 2.0.0 RC1
