@@ -296,18 +296,6 @@ bundle install
 rake suite
 ```
 
-<!-- -->
-
-```shell
-# run the complete test suite with Vagrant
-source  envvars-vagrant.sample
-rake suite
-
-# run the complete test suite with Vagrant without destroying the box afterwards
-source  envvars-vagrant.sample
-RAKE_ANSIBLE_VAGRANT_DONT_CLEANUP=1 rake suite
-```
-
 # Author information
 
 Mark Kusch @silpion.de mark.kusch
