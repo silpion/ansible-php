@@ -8,13 +8,13 @@ run any task itself.
 ```yaml
 - name: Include check-mode detection
   tags: "{{ role_name }}"
-  include: "{{ role_path }}/../silpion.lib/tasks/checkmodedetection.yml"
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/checkmodedetection.yml"
 ```
 
 ```yaml
 - name: Include data persistency paradigm
   tags: "{{ role_name }}"
-  include: "{{ role_path }}/../silpion.lib/tasks/datapersistency.yml"
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/datapersistency.yml"
 ```
 
 ```yaml
@@ -22,7 +22,7 @@ run any task itself.
 
 - name: Download some asset
   tags: "{{ role_name }}"
-  include: "{{ role_path }}/../silpion.lib/tasks/get_url.yml"
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/get_url.yml"
   vars:
     url: "{{ url_variable }}"
     filename: "{{ filename_variable }}"
@@ -34,7 +34,7 @@ run any task itself.
 
 - name: Upload downloaded asset
   tags: "{{ role_name }}"
-  include: "{{ role_path }}/../silpion.lib/tasks/copy.yml"
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/copy.yml"
   vars:
     filename: "{{ filename_variable }}"
 ```
@@ -46,7 +46,7 @@ run any task itself.
 
 - name: Include OS specific configuration
   tags: "{{ role_name }}"
-  include: "{{ role_path }}/../silpion.lib/tasks/os-specific-vars.yml"
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/os-specific-vars.yml"
 ```
 
 ```yaml
@@ -54,7 +54,7 @@ run any task itself.
 
 - name: Include version specific configuration
   tags: "{{ role_name }}"
-  include: "{{ role_path }}/../silpion.lib/tasks/version-specific-vars.yml
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/version-specific-vars.yml
   vars:
     version: "{{ role_name_version }}"
 ```
@@ -62,11 +62,33 @@ run any task itself.
 ```yaml
 - name: Include local facts installation
   tags: "{{ role_name }}"
-  include: "{{ role_path }}/../silpion.lib/tasks/localfacts.yml
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/localfacts.yml
   vars:
     template: myrolesfactstemplate.j2
     namespace: myroleshortname
 ```
+
+# Assumption
+
+Assumption on using silpion.lib is that roles for a playbook are installed
+in a directory called `roles` beneath `playbook.yml`. Otherwise defaults/
+fallbacks when including os-specific or version-specific variables might
+fail unrelated.
+
+## role-aware includes
+
+Ansible is currently working on role-aware includes, like:
+
+```yaml
+- name: Include file from silpion.lib role
+  tags: "{{ role_name }}"
+  include:
+    role: silpion.lib
+    file: datapersistency.yml
+```
+
+As soon as this is available, `silpion.lib` will have marked TODOs
+addressed and there shouldn't be assumptions anymore.
 
 # Configuration
 
@@ -156,7 +178,7 @@ Uploads will be stored in ``{{ lib_persistent_data_path_remote }}``.
   with_items:
     - filename1
     - filename2
-  include: "{{ role_path }}/../silpion.lib/tasks/copy.yml"
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/copy.yml"
   vars:
     filename: "{{ item }}"
 ```
