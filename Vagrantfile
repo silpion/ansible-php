@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
 
 
   # vm configuration
-  config.vm.box = ENV['ANSIBLELIB_VAGRANT_BOXNAME'] || c['vm']['box']
+  config.vm.box = ENV['ANSIBLE_LIB_VAGRANT_BOXNAME'] || c['vm']['box']
   config.vm.box_check_update = c['vm']['check_update']
 
   config.vm.define :ansiblelibtest do |d|
@@ -56,19 +56,19 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
       ansible.limit = 'vagrant'
 
       #   dynamic ansible-playbook configuration based on environment variables
-      ansible.tags = ENV['ANSIBLELIB_VAGRANT_ANSIBLE_TAGS']
-      ansible.skip_tags = ENV['ANSIBLELIB_VAGRANT_ANSIBLE_SKIP_TAGS']
+      ansible.tags = ENV['ANSIBLE_LIB_VAGRANT_ANSIBLE_TAGS']
+      ansible.skip_tags = ENV['ANSIBLE_LIB_VAGRANT_ANSIBLE_SKIP_TAGS']
       #   dynamic ansible-playbook configuration based on environment variables or user configuration
-      ansible.verbose = ENV['ANSIBLELIB_VAGRANT_ANSIBLE_VERBOSE'] || c['provisioner']['ansible']['verbose']
+      ansible.verbose = ENV['ANSIBLE_LIB_VAGRANT_ANSIBLE_VERBOSE'] || c['provisioner']['ansible']['verbose']
 
       # ansible-playbook raw arguments
       ansible.raw_arguments = []
 
-      if ENV['ANSIBLELIB_VAGRANT_ANSIBLE_CHECKMODE'] == '1'
+      if ENV['ANSIBLE_LIB_VAGRANT_ANSIBLE_CHECKMODE'] == '1'
         ansible.raw_arguments << '--check'
       end
 
-      if ENV['ANSIBLELIB_VAGRANT_ANSIBLE_DIFFMODE'] == '1' or c['provisioner']['ansible']['diff']
+      if ENV['ANSIBLE_LIB_VAGRANT_ANSIBLE_DIFFMODE'] == '1' or c['provisioner']['ansible']['diff']
         ansible.raw_arguments << '--diff'
       end
 
