@@ -1,3 +1,9 @@
+# 2.0.2
+
+Mark Kusch (3):
+* ansible-generator
+* Fixup roles path issues when including from third-party roles
+
 # 2.0.1
 
 Anja Siek (1):
