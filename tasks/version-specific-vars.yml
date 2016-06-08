@@ -1,7 +1,11 @@
 ---
+# TODO [kraM] Fix assumption on roles path in play -- Mon 06 Jun 2016 03:00:13 PM CEST
+#             There are chances that Ansible will support role-aware includes
+#             with the next releases, e.g. - include: role=silpion.lib file=vars/versions/noop.yml
+
 # Roles commonly include variables for middleware version specific configuration.
 - name: Include version specific vars
   with_first_found:
     - "{{ role_path }}/vars/versions/{{ version }}.yml"
-    - "{{ role_path }}/../silpion.lib/vars/versions/noop.yml"
+    - "{{ playbook_dir }}/roles/silpion.lib/vars/versions/noop.yml"
   include_vars: "{{ item }}"
