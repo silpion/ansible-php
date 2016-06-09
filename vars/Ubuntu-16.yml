@@ -1,0 +1,13 @@
+---
+php_package_list:
+  - php7.0-common
+  - php7.0-cgi
+  - php7.0-cli
+  - python-pip
+
+php_conf: /etc/php/7.0
+php_confd: /etc/php/7.0/mods-available
+php_mods_dir: /etc/php/7.0/mods-available
+
+php_en_mod: phpenmod
+php_dis_mod: phpenmod

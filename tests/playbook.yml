@@ -3,9 +3,9 @@
   vars:
     php_ppa: "ppa:ondrej/php5-5.6"
     php_package_list_additional:
-      - php-apc
+      - php-soap
     php_mods_enabled:
-      - "apcu"
+      - "soap"
     php_config:
       - option: "safe_mode"
         section: "PHP"
@@ -20,19 +20,22 @@
         section: "PHP"
         value: "32k"
     php_modules_conf:
-      - name: "apcu"
+      - name: "soap"
         configs:
-        - option: "apc.enabled"
-          value: "1"
-          section: "apcu"
-        - option: "apc.optimization"
+        - option: "soap.wsdl_cache_enabled"
           value: "0"
-          section: "apcu"
-        - option: "apc.shm_segments"
-          value: "1"
-          section: "apcu"
-        - option: "apc.shm_size"
-          value: "778M"
-          section: "apcu"
+          section: "soap"
+        - option: "soap.wsdl_cache_dir"
+          value: "/tmp/soap"
+          section: "soap"
   roles:
     - { role: ansible-php }
+
+  post_tasks:
+    - name: get php-version
+      changed_when: false
+      command: php --version
+      register: php_register_version
+    - name: output version
+      debug:
+        msg: "installed php version: {{ php_register_version.stdout }}"

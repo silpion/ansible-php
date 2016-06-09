@@ -1,9 +1,18 @@
+# 2.1.0
+
+Anja Siek (2):
+
+* add support for ubuntu16 + php7
+* fix test play
+
 # 2.0.3
+
 Anja Siek (1):
 
 * fix deprication warnings
 
 # 2.0.2
+
 Anja Siek (1):
 
 * Fixup dependency management
