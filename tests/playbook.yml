@@ -33,6 +33,7 @@
 
   post_tasks:
     - name: get php-version
+      changed_when: false
       command: php --version
       register: php_register_version
     - name: output version
