@@ -17,9 +17,12 @@ php_modules_conf: []
 #       value: "pdo.so"
 #       section: "pdo"
 
-php_config_changes_ini: "test.ini"
+php_config_changes_ini: test
 
 # add modules for enmod
 php_mods_enabled: []
 # remove modules
 php_mods_disabled: []
+
+php_en_mod: php5enmod
+php_dis_mod: php5dismod

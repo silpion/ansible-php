@@ -5,9 +5,10 @@
     that:
       - ansible_os_family in ['Debian','RedHat']
 
-- name: Include OS specific vars
+
+- name: Include OS specific configuration
   tags: php
-  include_vars: "{{ ansible_os_family }}.yml"
+  include: ../../silpion.lib/tasks/os-specific-vars.yml
 
 # Include os-specific tasks
 - name: Include Ubuntu specific tasks
@@ -38,7 +39,7 @@
   always_run: true
   failed_when: false
   changed_when: false
-  shell: 'command -v php5enmod'
+  shell: 'command -v {{ php_en_mod }}'
 
 - name: Decide Modules config-dir
   tags: php
@@ -50,7 +51,7 @@
   become: true
   with_items: "{{ php_config }}"
   ini_file:
-    dest: "{{ php_fact_mods_dir }}/{{ php_config_changes_ini }}"
+    dest: "{{ php_fact_mods_dir }}/{{ php_config_changes_ini|regex_replace('.ini$', '') }}.ini"
     section: "{{ item.section|default(php_default_ini_section) }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
@@ -88,18 +89,18 @@
     option: "{{ item.1.option }}"
     value: "{{ item.1.value }}"
 
-- name: Use php5enmod to enable modules
+- name: Use {{ php_en_mod }} to enable modules
   tags: php
   become: true
   changed_when: false
-  with_items: "{{ php_mods_enabled }}"
+  with_items: "{{ php_mods_enabled + [ php_config_changes_ini|regex_replace('.ini$', '') ]}}"
   when: "{{ php_register_mods_exists.stdout != '' }}"
-  command: php5enmod {{ item }}
+  command: "{{ php_en_mod }} {{ item }}"
 
-- name: Use php5dismod to disable modules
+- name: Use {{ php_dis_mod }} to disable modules
   tags: php
   become: true
   changed_when: false
   with_items: "{{ php_mods_disabled }}"
   when: "{{ php_register_mods_exists.stdout != '' }}"
-  command: php5dismod {{ item }}
+  command: "{{ php_dis_mod }} {{ item }}"
