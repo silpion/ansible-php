@@ -26,7 +26,7 @@ run any task itself.
   vars:
     url: "{{ url_variable }}"
     filename: "{{ filename_variable }}"
-    sha256sum: "{{ checksum_variable }}"
+    checksum: "{{ checksum_variable }}"
 ```
 
 ```yaml
