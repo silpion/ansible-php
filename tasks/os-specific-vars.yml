@@ -9,7 +9,8 @@
 
 - name: Include distribution specific vars
   with_first_found:
-    - "vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
-    - "vars/{{ ansible_distribution }}.yml"
-    - "{{ playbook_dir }}/roles/silpion.lib/vars/os-specific/noop.yml"
+    - skip: true
+      files:
+      - "vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+      - "vars/{{ ansible_distribution }}.yml"
   include_vars: "{{ item }}"
