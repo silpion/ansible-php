@@ -1,3 +1,19 @@
+# 2.1.0
+
+Alvaro Aleman (2):
+
+* Allow skipping the distribution specific vars inclusion
+* Allow skipping version-specific variable inclusion
+
+Anja Siek (1):
+
+* add depricated parameter to be backward compatible
+
+Mark Kusch (2):
+
+* Update get\_url to use the ansible 2.1 checksum syntax
+* Fix reference to sha256sum argument in documentation
+
 # 2.0.2
 
 Mark Kusch (3):
