@@ -11,6 +11,7 @@
     dest: "{{ lib_persistent_data_path_local }}/{{ filename|mandatory }}"
     url_username: "{{ url_username|default(omit) }}"
     url_password: "{{ url_password|default(omit) }}"
+    checksum: "{{ checksum|default(omit) }}"
     sha256sum: "{{ sha256sum|default(omit) }}"
     force: "{{ force|default(false)|bool }}"
     timeout: "{{ timeout|default(lib_module_get_url_timeout) }}"

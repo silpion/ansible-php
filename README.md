@@ -26,7 +26,7 @@ run any task itself.
   vars:
     url: "{{ url_variable }}"
     filename: "{{ filename_variable }}"
-    sha256sum: "{{ sha256sum_variable }}"
+    checksum: "{{ checksum_variable }}"
 ```
 
 ```yaml
@@ -131,6 +131,10 @@ e.g. ``become`` based privilege escalation with ``local_action``.
 
 Downloads will be stored in ``{{ lib_persistent_data_path_local }}``.
 
+**NOTE**: With Ansible 2.1 the `sha256sum` argument got deprecated.
+`sha256sum` is replaced with `checksum` in `silpion.lib >= 2.1.N`
+and requires the new format of `algorithm:checksum`.
+
 ```yaml
 - name: Download some assets with silpion.lib/get_url
   tags: "{{ role_name }}"
@@ -155,7 +159,7 @@ module related configuration options.
 * ``no_log``: Activate ``no_log: true`` for a download task (default: ``omit``)
 * ``url_username``: Username for authenticated services (default: ``omit``)
 * ``url_password``: Password for authenticated services (default: ``omit``)
-* ``sha256sum``: SHA 256 checksum (default: ``omit``)
+* ``checksum``: `algorithm:checksum` (default: ``omit``)
 * ``force``: Force overriding local assets with a download (default: ``omit``)
 * ``timeout``: Connection timeout (default: ``{{ lib_module_get_url_timeout }}`` -> ``10``)
 * ``use_proxy``: Whether to use the system proxy configuration (default: ``true``)
