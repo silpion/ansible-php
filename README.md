@@ -281,6 +281,10 @@ defaults. If there are no variables from silpion.util are configured, the
 
 * ``lib_module_get_url_timeout``: Default timeout for the ``get_url`` module when using tasks/get\_url.yml (int, default: ``{{ util_module_get_url_timeout|default(10) }}``)
 
+## play configuration
+
+* ``lib_roles_path``: Default path to play roles directory where for example lib role is installed (string, default: ``{{ playbook_dir }}/roles``)
+
 ## local facts
 
 Ansible ``setup`` module supports ``fact_path`` variable. This can be
