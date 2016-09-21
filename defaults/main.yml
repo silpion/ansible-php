@@ -11,3 +11,5 @@ lib_persistent_data_path_local: "{{ util_persistent_data_path_local|default(look
 lib_persistent_data_path_remote: "{{ util_persistent_data_path_remote|default('/usr/local/src/ansible/data') }}"
 
 lib_module_get_url_timeout: "{{ util_module_get_url_timeout|default(10) }}"
+
+lib_roles_path: "{{ playbook_dir }}/roles"
