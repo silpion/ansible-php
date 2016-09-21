@@ -1,3 +1,8 @@
+# 2.1.1
+Anja Siek (1):
+
+* add variable to default play roles-directory (WORKAROUND)
+
 # 2.1.0
 
 Alvaro Aleman (2):
