@@ -26,3 +26,6 @@ php_mods_disabled: []
 
 php_en_mod: php5enmod
 php_dis_mod: php5dismod
+
+# path to lib_role
+php_path_to_lib_role: "{{ lib_roles_path|default(playbook_dir + '/roles') }}"

@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Test silpion/ansible-php
+  hosts: all
   vars:
     php_package_list_additional:
       - php-soap
@@ -28,7 +29,7 @@
           value: "/tmp/soap"
           section: "soap"
   roles:
-    - { role: ansible-php }
+    - ansible-php
 
   post_tasks:
     - name: get php-version
