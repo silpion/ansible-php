@@ -8,7 +8,7 @@
 
 - name: Include OS specific configuration
   tags: php
-  include: ../../silpion.lib/tasks/os-specific-vars.yml
+  include: "{{ php_path_to_lib_role }}/silpion.lib/tasks/os-specific-vars.yml"
 
 # Include os-specific tasks
 - name: Include Ubuntu specific tasks
@@ -113,6 +113,6 @@
     - php
     - facts
     - localfacts
-  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/localfacts.yml"
+  include: "{{ php_path_to_lib_role }}/silpion.lib/tasks/localfacts.yml"
   vars:
     namespace: php
