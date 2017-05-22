@@ -36,7 +36,7 @@
 - name: Check command php5enmod exists
   tags: php
   register: php_register_mods_exists
-  always_run: true
+  check_mode: false
   failed_when: false
   changed_when: false
   shell: 'command -v {{ php_en_mod }}'
@@ -69,7 +69,7 @@
   tags: php
   become: true
   with_items: "{{ php_register_mods_ini.results }}"
-  when: "{{ php_register_mods_ini.results is defined and item.stat.exists }}"
+  when: php_register_mods_ini.results is defined and item.stat.exists
   shell:
     crudini --set {{ item.item.name }}.ini {{ item.item.name }};
     crudini --merge --existing  {{ item.item.name }}.ini  {{ item.item.name }} < {{ item.item.name }}.ini;
@@ -94,7 +94,7 @@
   become: true
   changed_when: false
   with_items: "{{ php_mods_enabled + [ php_config_changes_ini|regex_replace('.ini$', '') ]}}"
-  when: "{{ php_register_mods_exists.stdout != '' }}"
+  when: php_register_mods_exists.stdout != ''
   command: "{{ php_en_mod }} {{ item }}"
 
 - name: Use {{ php_dis_mod }} to disable modules
@@ -102,7 +102,7 @@
   become: true
   changed_when: false
   with_items: "{{ php_mods_disabled }}"
-  when: "{{ php_register_mods_exists.stdout != '' }}"
+  when: php_register_mods_exists.stdout != ''
   command: "{{ php_dis_mod }} {{ item }}"
 
 # Install role facts

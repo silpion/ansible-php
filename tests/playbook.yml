@@ -1,7 +1,6 @@
 ---
 - hosts: all
   vars:
-    php_ppa: "ppa:ondrej/php5-5.6"
     php_package_list_additional:
       - php-soap
     php_mods_enabled:

@@ -12,8 +12,8 @@ galaxy_info:
 
 
 dependencies:
-  - src: https://github.com/silpion/ansible-lib
-    name: silpion.lib
+  - src: https://github.com/silpion/ansible-util
+    name: silpion.util
 
 
 #---

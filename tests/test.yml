@@ -1,16 +1,41 @@
 ---
 - name: Test silpion/ansible-php
   hosts: all
-  pre_tasks:
-    - name: Install aliases
-      become: true
-      with_items:
-        - "l='ls -lh'"
-        - "s=systemctl"
-        - "j=journalctl"
-      lineinfile:
-        state: present
-        dest: /root/.bashrc
-        line: "alias {{ item }}"
+  vars:
+    php_package_list_additional:
+      - php-soap
+    php_mods_enabled:
+      - "soap"
+    php_config:
+      - option: "safe_mode"
+        section: "PHP"
+        value: "Off"
+      - option: "memory_limit"
+        section: "PHP"
+        value: "512M"
+      - option: "date.timezone"
+        section: "Date"
+        value: "UTC"
+      - option: "realpath_cache_size"
+        section: "PHP"
+        value: "32k"
+    php_modules_conf:
+      - name: "soap"
+        configs:
+        - option: "soap.wsdl_cache_enabled"
+          value: "0"
+          section: "soap"
+        - option: "soap.wsdl_cache_dir"
+          value: "/tmp/soap"
+          section: "soap"
   roles:
     - ansible-php
+
+  post_tasks:
+    - name: get php-version
+      changed_when: false
+      command: php --version
+      register: php_register_version
+    - name: output version
+      debug:
+        msg: "installed php version: {{ php_register_version.stdout }}"
