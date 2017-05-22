@@ -104,3 +104,15 @@
   with_items: "{{ php_mods_disabled }}"
   when: "{{ php_register_mods_exists.stdout != '' }}"
   command: "{{ php_dis_mod }} {{ item }}"
+
+# Install role facts
+#   This should be the last tasks in main.yml.
+#   Add any other tasks above this one, if applicable.
+- name: Include facts management
+  tags:
+    - php
+    - facts
+    - localfacts
+  include: "{{ playbook_dir }}/roles/silpion.lib/tasks/localfacts.yml"
+  vars:
+    namespace: php
