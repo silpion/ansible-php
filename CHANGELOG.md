@@ -1,3 +1,15 @@
+# 211
+
+Anja Siek (3):
+
+* updated generator
+* fix for deprication warnings
+* fix lib role includes
+
+Mark Kusch (1):
+
+* Fix role version in spec test
+
 # 2.1.0
 
 Anja Siek (2):
